@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>आईसाठी — Women's Day</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Marathi:ital@0;1&family=Noto+Serif+Devanagari:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink-light: #fff0f3;
+      --pink-soft: #ffd6e0;
+      --pink-mid: #ffb3c6;
+      --pink-warm: #ff85a1;
+      --pink-deep: #e8637d;
+      --pink-dark: #c94c68;
+      --cream: #fff8f9;
+      --gold: #d4a0a8;
+      --text-dark: #3a1a22;
+      --text-mid: #6b3545;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--pink-light);
+      color: var(--text-dark);
+      font-family: 'Noto Serif Devanagari', serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      background: var(--pink-deep);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease;
+      mix-blend-mode: multiply;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--pink-warm);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.4s ease, width 0.3s, height 0.3s;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #fff0f3 0%, #ffe4ec 50%, #ffd6e0 100%);
+    }
+
+    .petal-bg {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      border-radius: 50% 0 50% 0;
+      opacity: 0.18;
+      animation: floatPetal linear infinite;
+    }
+
+    @keyframes floatPetal {
+      0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      5%   { opacity: 0.18; }
+      95%  { opacity: 0.12; }
+      100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      color: var(--pink-dark);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s 0.3s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: clamp(4rem, 14vw, 11rem);
+      line-height: 1.0;
+      color: var(--pink-deep);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: fadeUp 1.2s 0.6s forwards;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 2px 40px rgba(232,99,125,0.15);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: var(--text-mid);
+      text-align: center;
+      max-width: 520px;
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s 1s forwards;
+      margin-top: 1.2rem;
+      font-weight: 300;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      animation: fadeUp 1s 1.8s forwards;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--pink-dark);
+      letter-spacing: 0.15em;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--pink-warm), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { transform: scaleY(1); opacity: 1; }
+      50%       { transform: scaleY(0.5); opacity: 0.4; }
+    }
+
+    /* ─── REVEAL SECTIONS ─── */
+    .section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem;
+      position: relative;
+    }
+
+    .section-inner {
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Animated reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(60px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.25s; }
+    .reveal-delay-3 { transition-delay: 0.4s; }
+    .reveal-delay-4 { transition-delay: 0.55s; }
+
+    /* ─── SECTION 1: ओळख ─── */
+    #s1 {
+      background: linear-gradient(180deg, var(--pink-light) 0%, #ffe9ee 100%);
+    }
+    .big-quote {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      color: var(--pink-deep);
+      line-height: 1.25;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    .big-quote::before {
+      content: '"';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10rem;
+      color: var(--pink-soft);
+      position: absolute;
+      top: -3rem;
+      left: -1.5rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .body-text {
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      color: var(--text-mid);
+      line-height: 2;
+      font-weight: 300;
+    }
+
+    /* ─── DIVIDER ─── */
+    .floral-divider {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--pink-mid);
+      padding: 2rem 0;
+      letter-spacing: 0.5rem;
+      opacity: 0.7;
+    }
+
+    /* ─── SECTION 2: memories ─── */
+    #s2 {
+      background: linear-gradient(160deg, #fde8ee 0%, var(--pink-soft) 100%);
+    }
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .memory-card {
+      background: rgba(255,255,255,0.65);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,179,198,0.4);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s ease;
+    }
+    .memory-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 60px rgba(232,99,125,0.15);
+    }
+    .memory-icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
+    .memory-title {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: 1.3rem;
+      color: var(--pink-dark);
+      margin-bottom: 0.5rem;
+    }
+    .memory-text {
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    /* ─── SECTION 3: big statement ─── */
+    #s3 {
+      background: var(--pink-deep);
+      overflow: hidden;
+      position: relative;
+    }
+    #s3::before {
+      content: 'आई';
+      position: absolute;
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: 40vw;
+      color: rgba(255,255,255,0.05);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      line-height: 1;
+    }
+    #s3 .big-quote { color: #fff; }
+    #s3 .big-quote::before { color: rgba(255,255,255,0.15); }
+    #s3 .body-text { color: rgba(255,255,255,0.8); }
+    #s3 .section-label { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.3); }
+
+    .section-label {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      color: var(--pink-dark);
+      border: 1px solid var(--pink-mid);
+      padding: 0.4rem 1.2rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      text-transform: uppercase;
+    }
+
+    /* ─── SECTION 4: gratitude list ─── */
+    #s4 {
+      background: linear-gradient(180deg, #fff0f3 0%, #ffe4ec 100%);
+    }
+    .gratitude-list {
+      list-style: none;
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .gratitude-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.2rem;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid rgba(255,133,161,0.2);
+      text-align: left;
+      opacity: 0;
+      transform: translateX(-30px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .gratitude-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .g-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      color: var(--pink-mid);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 3rem;
+      text-align: right;
+    }
+    .g-text {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      color: var(--text-dark);
+      line-height: 1.7;
+      padding-top: 0.3rem;
+    }
+    .g-text strong {
+      display: block;
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: 1.3em;
+      color: var(--pink-deep);
+      margin-bottom: 0.3rem;
+    }
+
+    /* ─── SECTION 5: final message ─── */
+    #s5 {
+      background: linear-gradient(160deg, #fce4ec 0%, #ffd6e0 60%, #ffb3c6 100%);
+      min-height: 100vh;
+    }
+    .final-title {
+      font-family: 'Tiro Devanagari Marathi', serif;
+      font-size: clamp(3rem, 10vw, 8rem);
+      color: var(--pink-dark);
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+    .final-text {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--text-mid);
+      line-height: 2.1;
+      max-width: 620px;
+      margin: 0 auto 3rem;
+      font-weight: 300;
+    }
+    .signature {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      color: var(--pink-deep);
+    }
+
+    /* ─── FLOATING PETALS in sections ─── */
+    .ambient-circle {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33%  { transform: translate(20px, -15px) rotate(5deg); }
+      66%  { transform: translate(-10px, 10px) rotate(-3deg); }
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: var(--pink-dark);
+      color: rgba(255,255,255,0.7);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+    }
+    footer span { color: #fff; }
+
+    @media (max-width: 600px) {
+      .memory-grid { grid-template-columns: 1fr; }
+      .big-quote::before { font-size: 6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <div class="petal-bg" id="petalBg"></div>
+
+    <!-- Ambient blobs -->
+    <div class="ambient-circle" style="width:500px;height:500px;background:rgba(255,182,193,0.25);top:-100px;left:-150px;animation:drift 12s ease-in-out infinite;"></div>
+    <div class="ambient-circle" style="width:400px;height:400px;background:rgba(255,133,161,0.15);bottom:-80px;right:-100px;animation:drift 15s ease-in-out infinite reverse;"></div>
+
+    <p class="hero-eyebrow">महिला दिन · Women's Day</p>
+    <h1 class="hero-title">आई</h1>
+    <p class="hero-sub">माझ्या आयुष्यातील सर्वात मोठी देणगी — माझी आई</p>
+
+
+  </section>
+
+  <!-- ─── SECTION 1 ─── -->
+  <section class="section" id="s1">
+    <div class="section-inner">
+      <p class="section-label reveal">तिची ओळख</p>
+      <h2 class="big-quote reveal reveal-delay-1">
+        तू नसती तर<br/>मी नसतो
+      </h2>
+      <div class="floral-divider reveal reveal-delay-2">❀ ❀ ❀</div>
+      <p class="body-text reveal reveal-delay-3">
+        आई — मी तुझ्यावर खूप खूप खूप खूप प्रेम करतो.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 2 ─── -->
+  <section class="section" id="s2">
+    <div class="section-inner">
+      <p class="section-label reveal">आठवणी</p>
+      <h2 class="big-quote reveal reveal-delay-1" style="font-size:clamp(2rem,5vw,4rem)">
+        तू दिलेल्या क्षणांमध्ये<br/>माझे बालपण आहे
+      </h2>
+      <div class="memory-grid">
+        <div class="memory-card reveal reveal-delay-1">
+          <div class="memory-icon">🥛</div>
+          <div class="memory-title">सकाळचं दूध</div>
+          <p class="memory-text">घड्याळाच्या काट्याबरोबर शर्यत लावून द्यायचीस तू आई.</p>
+        </div>
+        <div class="memory-card reveal reveal-delay-2">
+          <div class="memory-icon">📚</div>
+          <div class="memory-title">शाळेचे दिवस</div>
+          <p class="memory-text">अख्खी रात्र माझा घरचा अभ्यास पुन्हा करून घ्यायचीस तू आई.</p>
+        </div>
+        <div class="memory-card reveal reveal-delay-3">
+          <div class="memory-icon">🛵</div>
+          <div class="memory-title">गाडीवरची गप्पा</div>
+          <p class="memory-text">मी सांगत असलेल्या गोष्टींमध्ये तुला रस नसतानाही गाडीवर पुर्ण वेळ माझी बडबड ऐकायचीस तू आई.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 3: BIG STATEMENT ─── -->
+  <section class="section" id="s3">
+    <div class="section-inner">
+      <p class="section-label reveal">तू माझी शक्ती</p>
+      <h2 class="big-quote reveal reveal-delay-1">
+        तू आहेस म्हणून<br/>मी आहे
+      </h2>
+      <p class="body-text reveal reveal-delay-2">
+        जीवन कितीही कठीण झाले तरी तू माझ्यासाठी खंबीरपणे उभी राहिलीस. येणाऱ्या भविष्यात मी पण तुझा सर्वात खंबीर आधारस्तंभ राहण्याचा प्रयत्न करीन, कारण तुझे हसू — हेच माझे बळ आहे.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 4: GRATITUDE ─── -->
+  <section class="section" id="s4">
+    <div class="section-inner">
+      <p class="section-label reveal">आभार</p>
+      <h2 class="big-quote reveal reveal-delay-1" style="font-size:clamp(2rem,5vw,4rem);">
+        तुझ्यासाठी माझे<br/>मन कृतज्ञ आहे
+      </h2>
+      <ul class="gratitude-list" id="gratList">
+        <li class="gratitude-item">
+          <span class="g-num">०१</span>
+          <div class="g-text">
+            <strong>तुझे प्रेम</strong>
+            निःस्वार्थ, अपार, आणि अखंड — जे मला नेहमी जगण्याची प्रेरणा देते.
+          </div>
+        </li>
+        <li class="gratitude-item">
+          <span class="g-num">०२</span>
+          <div class="g-text">
+            <strong>तुझा संयम</strong>
+            माझ्या चुका सहन करत, मला योग्य मार्ग दाखवण्यासाठी.
+          </div>
+        </li>
+        <li class="gratitude-item">
+          <span class="g-num">०३</span>
+          <div class="g-text">
+            <strong>तुझे जेवण</strong>
+            तुझ्या हातचे जेवण — जगातील सर्वात चविष्ट पदार्थ.
+          </div>
+        </li>
+        <li class="gratitude-item">
+          <span class="g-num">०४</span>
+          <div class="g-text">
+            <strong>तुझे आशीर्वाद</strong>
+            जे मला प्रत्येक संकटातून बाहेर काढतात.
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 5: FINALE ─── -->
+  <section class="section" id="s5">
+    <div class="section-inner">
+      <div class="ambient-circle" style="width:600px;height:600px;background:rgba(255,133,161,0.1);top:50%;left:50%;transform:translate(-50%,-50%);animation:drift 18s infinite;"></div>
+      <p class="section-label reveal">महिला दिनाच्या शुभेच्छा</p>
+      <h2 class="final-title reveal reveal-delay-1">
+        Happy<br/>Women's Day,<br/>आई ❤️
+      </h2>
+      <p class="final-text reveal reveal-delay-2">
+        तू माझ्या आयुष्यात आहेस हे माझे सर्वात मोठे भाग्य आहे.
+        तू नसतीस तर मी काहीच नसतो.
+        तुझ्या प्रेमामुळेच मी आज जे आहे ते आहे.
+        आई — तुझ्यावर माझे मनापासून प्रेम आहे.
+      </p>
+      <div class="floral-divider reveal reveal-delay-3" style="font-size:2.5rem;color:var(--pink-dark);opacity:1;">
+        🌸 🌷 🌸
+      </div>
+      <p class="signature reveal reveal-delay-4">— यशकडून तुझ्यासाठी, कायमसाठी</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>आई</span> — माझ्या जीवनाची पहिली कविता &nbsp;·&nbsp; महिला दिन २०२५
+  </footer>
+
+  <script>
+    // ─── Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx - 6 + 'px';
+      cursor.style.top  = my - 6 + 'px';
+    });
+    function animRing() {
+      rx += (mx - rx - 18) * 0.12;
+      ry += (my - ry - 18) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+
+    // ─── Generate petals
+    const petalBg = document.getElementById('petalBg');
+    const petalColors = ['#ffb3c6','#ff85a1','#ffd6e0','#e8637d','#ffc0cb'];
+    for (let i = 0; i < 22; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      const size = 8 + Math.random() * 20;
+      p.style.cssText = `
+        width:${size}px; height:${size * 1.4}px;
+        left:${Math.random() * 100}%;
+        background:${petalColors[Math.floor(Math.random()*petalColors.length)]};
+        animation-duration:${8 + Math.random() * 14}s;
+        animation-delay:${Math.random() * 12}s;
+      `;
+      petalBg.appendChild(p);
+    }
+
+    // ─── Scroll reveal (IntersectionObserver)
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // ─── Gratitude items staggered reveal
+    const gItems = document.querySelectorAll('.gratitude-item');
+    const gObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), 
+            Array.from(gItems).indexOf(e.target) * 120);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    gItems.forEach(el => gObserver.observe(el));
+
+    // ─── Parallax subtle effect on hero
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      const heroTitle = document.querySelector('.hero-title');
+      if (heroTitle) {
+        heroTitle.style.transform = `translateY(${y * 0.25}px)`;
+        heroTitle.style.opacity = Math.max(0, 1 - y / 500);
+      }
+    });
+  </script>
+</body>
+</html>
